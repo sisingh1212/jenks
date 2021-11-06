@@ -1,0 +1,27 @@
+pipeline {
+    
+    
+    agent any 
+    triggers { cron('* * * * *') }
+    options { timeout(time: 5) }
+    parameters {
+        booleanParam(name: 'DEBUG_BUILD', defaultValue: true,
+        description: 'Is it the debug build?')}
+    stages {
+        stage('example'){
+            environment { NAME  =  'Sid'}
+            when { expression  {return params.DEBUG_BUILD}}
+            steps {
+                echo "Hello from $NAME"
+                
+                
+                    
+                }
+                
+            }
+    
+        
+        }
+    
+    post { always { echo 'I will always say Hello again!' } }
+}
