@@ -1,0 +1,28 @@
+pipeline {
+    
+    agent any
+    environment {
+        NAME = 'Sid'
+        SECRET = credentials('sid')
+    }
+    stages {
+        stage('sid') {
+            steps {
+                sh 'echo  $SECRET'
+                retry(3){
+                 sh ll
+                
+                }
+                timeout(time : 6, unit : 'MINUTES') {
+                    echo "my name is $NAME"
+                }
+            }
+            
+        }
+        stage('tryty') {
+            steps {
+                echo "done"
+            }
+        }
+    }
+}
