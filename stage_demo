@@ -1,0 +1,51 @@
+pipeline {
+    agent any
+    stages {
+        stage('build') {
+            steps {
+                script {
+                inputRespose = input ([
+                    message : "please confirm",
+                    submitterParameter: 'submitter',
+                    parameter: [
+                [$class: 'BooleanParameterDefinition', defaultValue: true, name: 'param1', description: 'description1'],
+                [$class: 'ChoiceParameterDefinition', choices: 'choice1\nchoice2', name: 'param2', description: 'description2']]
+              ])
+            }}}
+        stage('prepare') {
+            steps {
+                timeout(time: 2, unit: 'MINUTES') { 
+                sleep 1
+                echo "hello world"
+                }   
+        }
+            post {
+                always {
+                    script {
+                        echo "its always post"
+                    }
+                }
+            }
+        }
+        stage('parallel_build') {
+            
+            parallel {
+                
+                stage('buil1') {
+                    steps {
+
+                          echo "build1 paparralle"
+                        }
+                        
+                    
+                    
+                }
+                stage('build2') {
+                    steps {
+                        echo "build2 parallel"
+                    }
+                }
+            }
+        }
+        }
+    }
