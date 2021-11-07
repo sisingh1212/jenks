@@ -1,0 +1,23 @@
+pipeline {
+    
+    agent any
+    parameters { 
+        booleanParam(name: "Prod", defaultValue: false)
+    }
+    stages {
+        stage('build1') {
+            parallel {
+                stage('prod') {
+                  when {expression { params.Prod}} 
+                  steps {
+                        echo "Deployment in production"
+                    } 
+                }
+                stage('stag') {
+                    when {expression { !params.Prod}} 
+                     steps {
+                          echo "Deployment in stagong"
+                      }  }
+                    
+}}}
+    }
