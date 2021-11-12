@@ -1,0 +1,39 @@
+
+
+
+/* tHIS SCRIPT DEFINES EXPLICIT PARA,ETER AND CLASS PARAMETER AND IT ALSO BASED ON THE INPUT IT RUNS A BUILD (OR NOT) */
+pipeline{
+    
+    agent any
+    parameters { 
+        booleanParam(name: "Prod", defaultValue: false)
+    }
+    stages{
+        
+        stage('build') {
+            
+            steps {
+                script {
+                    inputpara = input([
+                        message: 'what are you going to choose ?',
+                        submittedParameter: 'sisingh',
+                        parameters: [[$class: 'BooleanParameterDefinition', name: 'bb', defaultValue: false, description: 'booleanwa'],[$class: 'ChoiceParameterDefinition', name: 'ss',choices: 'choice1\nchoice2', description: 'choices']]
+                        
+                        ])
+                        
+                    echo "${inputpara}"
+                }
+                
+            }
+        }
+        stage('Saanvi') {
+            when { expression { params.Prod == true} }
+            steps {
+                script {
+                  echo "Build passed"
+                }
+            }
+        }
+        
+    }
+}
